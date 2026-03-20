@@ -55,15 +55,32 @@ public class TaskList {
         System.out.println("Task "+id+" marked as "+ status +".");
     } 
         //List by filter
-        public void list(String filter) {
+    public void list(String filter) {
         if (filter != null && !filter.equals("todo")
-                           && !filter.equals("done")
-                           && !filter.equals("in-progress")) {
+                        && !filter.equals("done")
+                        && !filter.equals("in-progress")) {
             System.out.println("Unknown status: " + filter);
             System.out.println("Valid options: todo, done, in-progress");
             return;
         }
+        
+        List<Task> results = new ArrayList<>();
+        for (Task t : tasks) {
+            if (filter == null || t.status.equals(filter)) {
+                results.add(t);
+            }
         }
+
+        if (results.isEmpty()) {
+            System.out.println(filter == null ? "No tasks found." : "No tasks with status: " + filter);
+            return;
+        }
+
+        printHeader();
+        for (Task t : results) {
+            System.out.println(t);
+        }
+    }
     //Private Helpers
         //find task by id
     private Task findById(int id){
@@ -77,21 +94,19 @@ public class TaskList {
     }
     //JSON persistence
         //Save
-    private void save(){
+    private void save() {
         StringBuilder sb = new StringBuilder("[\n");
-        for(int i = 0;i<tasks.size();i++){
+        for (int i = 0; i < tasks.size(); i++) {
             sb.append(tasks.get(i).toJson());
-            if(i<tasks.size()-1)sb.append(",");
-            sb.append("]");
+            if (i < tasks.size() - 1) sb.append(",\n");
+            else sb.append("\n");
         }
-
+        sb.append("]");
         try {
             Files.writeString(Path.of(FILE), sb.toString());
         } catch (IOException e) {
-            System.err.println("Error saving taks: "+ e.getMessage());
+            System.err.println("Error saving tasks: " + e.getMessage());
         }
-            //Load
-        
     }
     private List<Task> load() {
         Path path = Path.of(FILE);
@@ -116,6 +131,7 @@ public class TaskList {
             if      (c == '{') { if (depth++ == 0) objStart = i; }
             else if (c == '}') { if (--depth == 0) list.add(parseJsonObject(json.substring(objStart, i + 1))); }
         }
+        //System.out.println("Parsed " + list.size() + " tasks"); // debug
         return list;
     }
         //parse object

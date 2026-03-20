@@ -1,8 +1,7 @@
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 
 public class Task {
     static final DateTimeFormatter FMT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
@@ -17,7 +16,7 @@ public class Task {
         this.id=id;
         this.description=description;
         this.status="todo";
-        String now=LocalDate.now().format(FMT);
+        String now=LocalDateTime.now().format(FMT);
         this.createdAt=now;
         this.updatedAt=now;
     }
@@ -55,7 +54,7 @@ public class Task {
                 id,
                 status,
                 truncate(description, 39),
-                updatedAt.replace("T", " "));
+                updatedAt.substring(0, 19).replace("T", " "));
     }
     //Helpers
     private static String escapeJson(String s) {

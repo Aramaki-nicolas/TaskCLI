@@ -1,8 +1,9 @@
 
-public class TaskCLI {
+public class TaskCli {
 
     
     public static void main(String[] args) {
+        
         if(args.length==0){
             printUsage();
             return;
@@ -61,16 +62,16 @@ public class TaskCLI {
         //print Usage
     private static void printUsage(){
         System.out.println("""
-            Task CLI — Usage:
-              task-cli add "<description>"
-              task-cli update <id> "<new description>"
-              task-cli delete <id>
-              task-cli mark-in-progress <id>
-              task-cli mark-done <id>
-              task-cli list
-              task-cli list todo
-              task-cli list in-progress
-              task-cli list done
+            Task CLI commands:
+              java TaskCli add "<description>"
+              java TaskCli update <id> "<new description>"
+              java TaskCli delete <id>
+              java TaskCli mark-in-progress <id>
+              java TaskCli mark-done <id>
+              java TaskCli list
+              java TaskCli list todo
+              java TaskCli list in-progress
+              java TaskCli list done
             """);
     }
 
