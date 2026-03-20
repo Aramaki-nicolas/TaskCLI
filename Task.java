@@ -40,20 +40,14 @@ public class Task {
         this.updatedAt=LocalDateTime.now().format(FMT);
     }
     //Adapt to JSON
-    public String toJson(){
-        return String.format(            """
-              {
-                "id": %d,
-                "description": "%s",
-                "status": "%s",
-                "createdAt": "%s",
-                "updatedAt": "%s"
-              }""",
-            id,
-            escapeJson(description),
-            status,
-            createdAt,
-            updatedAt);
+    public String toJson() {
+    return "  {\n" +
+           "    \"id\": " + id + ",\n" +
+           "    \"description\": \"" + escapeJson(description) + "\",\n" +
+           "    \"status\": \"" + status + "\",\n" +
+           "    \"createdAt\": \"" + createdAt + "\",\n" +
+           "    \"updatedAt\": \"" + updatedAt + "\"\n" +
+           "  }";
     }
     @Override
     public String toString() {
